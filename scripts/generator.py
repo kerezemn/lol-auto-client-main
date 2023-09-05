@@ -121,7 +121,7 @@ class Generator:
 
     def rune_icon_clicked(self) -> None:
         """ Rün butonuna basildiginda triggerlanir. """
-        self.rune_select_detector.change_image(0, "./general/rune_%d.png" % self.selected_champ)
+        self.rune_select_detector.change_image(0, "./ui/rune_%d.png" % self.selected_champ)
         self.current_queue.pop(0)
 
     def rune_selected(self) -> None:
@@ -150,11 +150,11 @@ class Generator:
 
         # Confige göre detectorleri oluşturur.
         if self.config['accept_game']:
-            self.detectors.append(Detector("./general/accept.png", 1, 0.95, True, self.game_accepted, alternative_paths = ["./general/interactive_accept.png"]))
+            self.detectors.append(Detector("./ui/accept.png", 1, 0.95, True, self.game_accepted, alternative_paths = ["./ui/interactive_accept.png"]))
         
         if self.config['pick_champ']:
             self.detectors.append(
-                Detector("./general/ready.png", 1, 0.90, True, self.champ_locked, self.get_searching, "ready")
+                Detector("./ui/ready.png", 1, 0.90, True, self.champ_locked, self.get_searching, "ready")
             )
 
             for i, champ in enumerate(self.config['pick_champ']):
@@ -168,21 +168,21 @@ class Generator:
         
         if self.config['write_chat']['times'] and self.config['write_chat']['write']:
             self.detectors.append(
-                Detector("./general/chat.png", 0.5, 0.95, True, self.chat_clicked, self.get_searching, "chat")
+                Detector("./ui/chat.png", 0.5, 0.95, True, self.chat_clicked, self.get_searching, "chat")
             )
         
         if self.config['pick_runes']:
             self.detectors.append(
-                Detector("./general/rune_icon.png", 0.5, 0.95, True, self.rune_icon_clicked, self.get_searching, "rune_icon")
+                Detector("./ui/rune_icon.png", 0.5, 0.95, True, self.rune_icon_clicked, self.get_searching, "rune_icon")
             )
 
             self.rune_select_detector = Detector(
-                "./general/rune_1.png", 0.5, 0, True, self.rune_selected, self.get_searching, "rune_select"
+                "./ui/rune_1.png", 0.5, 0, True, self.rune_selected, self.get_searching, "rune_select"
             )
 
             self.detectors.append(self.rune_select_detector)
         
-        self.detectors.append(Detector("./general/close.png", 0.5, 0.95, trigger_func = self.close))
+        self.detectors.append(Detector("./ui/close.png", 0.5, 0.95, trigger_func = self.close))
 
     def run(self) -> None:
         self.generate_detectors()
